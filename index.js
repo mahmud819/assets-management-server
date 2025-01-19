@@ -3,7 +3,7 @@ const express = require('express');
 const cors = require('cors');
 const { MongoClient, ServerApiVersion } = require('mongodb');
 const app = express();
-const port = process.env.port || 5000;
+const port = process.env.PORT || 5000;
 
 
 // app.use(
@@ -38,18 +38,18 @@ const port = process.env.port || 5000;
       // Connect the client to the server	(optional starting in v4.7)
       await client.connect();
       // !All collection
-      const usersCollection = client.db("assets-management").collection("users");
+      const userCollection = client.db("assets-management").collection("users");
       // !All post operation
 
       app.post("/users", async (req, res) => {
         console.log(req.headers.origin)
         const newUsers = req.body;
-        const result = await usersCollection.insertOne(newUsers);
+        const result = await userCollection.insertOne(newUsers);
         res.send(result);
       });
       // ! All get operation
       app.get("/users", async (req, res) => {
-        const cursor = usersCollection.find();
+        const cursor = userCollection.find();
         const result = await cursor.toArray();
         res.send(result);
       });
