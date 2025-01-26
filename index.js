@@ -40,6 +40,7 @@ const port = process.env.PORT || 5000;
       // !All collection
       const userCollection = client.db("assets-management").collection("users");
       const productsCollection = client.db("assets-management").collection("products")
+      const requestedProductsCollection = client.db("assets-management").collection("requestedProducts")
       // !All post operation
 
       app.post("/users", async (req, res) => {
@@ -52,6 +53,12 @@ const port = process.env.PORT || 5000;
       app.post('/products',async(req,res)=>{
         const newProducts = req.body;
         const result = await productsCollection.insertOne(newProducts);
+        res.send(result);
+      })
+
+      app.post('/requestedProducts',async(req,res)=>{
+        const newProducts = req.body;
+        const result = await requestedProductsCollection.insertOne(newProducts);
         res.send(result);
       })
       // ! All get operation
