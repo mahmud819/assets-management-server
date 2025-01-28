@@ -13,7 +13,10 @@ app.use(
   cors({
     origin: [
       "http://localhost:5173",
-      "http://localhost:5000"
+      "http://localhost:5000",
+      'https://assignment-twelve-479bb.web.app',
+      'https://assignment-twelve-479bb.firebaseapp.com'
+
     ],
     credentials: true,
   })
@@ -55,7 +58,7 @@ app.use(
   async function run() {
     try {
       // Connect the client to the server	(optional starting in v4.7)
-      await client.connect();
+      // await client.connect();
       // !All collection
       const userCollection = client.db("assets-management").collection("users");
       const productsCollection = client.db("assets-management").collection("products")
@@ -75,8 +78,8 @@ app.use(
         res
           .cookie("token", token, {
             httpOnly: true,
-            // secure: process.env.NODE_ENV === 'production',
-            secure: false,
+            secure: process.env.NODE_ENV === 'production',
+            // secure: false,
           })
           .send({ success: true });
       });
@@ -85,8 +88,8 @@ app.use(
         res
           .clearCookie("token", {
             httpOnly: true,
-            // secure: process.env.NODE_ENV === 'production',
-            secure: false,
+            secure: process.env.NODE_ENV === 'production',
+            // secure: false,
           })
           .send({ success: true });
       });
@@ -165,8 +168,8 @@ app.use(
       
       });
       // Send a ping to confirm a successful connection
-      await client.db("admin").command({ ping: 1 });
-      console.log("Pinged your deployment. You successfully connected to MongoDB!");
+      // await client.db("admin").command({ ping: 1 });
+      // console.log("Pinged your deployment. You successfully connected to MongoDB!");
     } finally {
       // Ensures that the client will close when you finish/error
       // await client.close();
