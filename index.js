@@ -148,23 +148,14 @@ app.use(
 
       app.patch('/requestedProducts/:id',async(req,res)=>{
         const id= req.params.id;
-        try{
-
-          const query = {_id : new ObjectId(id)}
-          const updatedRequestedProducts = req.body;
-        //   console.log('requested id :',query);
-        // console.log('update',req.body);
-          const updateProducts = await requestedProductsCollection.findOneAndUpdate(
-            query,
-            {$set : updatedRequestedProducts},
-            {returnDocument : after}
-          );
-          console.log('updadedData',updateProducts)
-          res.json({updateProducts});
+        const filter = {_id: new ObjectId(id)};
+        const updatedDoc = {
+          $set:{
+            approvalStatus: 'approved'
+          }
         }
-        catch(error){
-          res.status(500).json({error : 'faild to aprrove'});
-        }
+        const result = await requestedProductsCollection.updateOne(filter,updatedDoc);
+        res.send(result);
       
       });
       // Send a ping to confirm a successful connection
